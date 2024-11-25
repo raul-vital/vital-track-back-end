@@ -30,6 +30,26 @@ router.post('/signup', async (req,res) =>{
      }
 })
 
+router.post('/signin', async (req,res) => {
+    try{
+        const user = await User.findOne({username: req.body.username, email: req.body.email})
+        if(user && bcrypt.compareSync(req.body.password, user.password)){
+            const token = jwt.sign(
+                {
+                    username: user.username,
+                    email: user.email,
+                    _id: user._id
+                }, process.env.JWT_SECRET
+            )
+            res.status(200).json({token})
+        }else{
+            res.status(400).json({err: "Invalid username, email or password"})
+        }
+    }catch(err){
+        res.status(400).json({err: err.message})
+
+    }
+})
 
 
 
