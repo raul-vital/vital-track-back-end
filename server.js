@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const usersRouter = require('./controllers/users')
-
+const workoutsRouter = require('./controllers/workouts')
 
 
 mongoose.connect(process.env.MONGODB_URI)
@@ -20,9 +20,7 @@ app.use(cors())
 
 // <><><><> ROUTES <><><><>
 app.use('/users', usersRouter)
-
-
-
+app.use('/workouts', workoutsRouter)
 
 
 
