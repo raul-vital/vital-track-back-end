@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 
+
 const SALT_LENGTH = 12
 
 router.post('/signup', async (req,res) =>{
@@ -32,12 +33,11 @@ router.post('/signup', async (req,res) =>{
 
 router.post('/signin', async (req,res) => {
     try{
-        const user = await User.findOne({username: req.body.username, email: req.body.email})
+        const user = await User.findOne({username: req.body.username,})
         if(user && bcrypt.compareSync(req.body.password, user.password)){
             const token = jwt.sign(
                 {
                     username: user.username,
-                    email: user.email,
                     _id: user._id
                 }, process.env.JWT_SECRET
             )
