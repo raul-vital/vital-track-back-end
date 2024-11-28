@@ -42,12 +42,11 @@ router.get('/:workoutId', async (req,res)=>{
 })
 
 // <><><> Update <><><>
-
 router.put('/:workoutId', async (req,res)=>{
     try{
         const workout = await Workout.findById(req.params.workoutId)
         if(!workout.user.equals(req.user._id)){
-            return res.status(403).send("User Not Allowed!")
+            return res.status(403).send("User Not Authorized!")
         }
 
         const updatedWorkout = await Workout.findByIdAndUpdate(
@@ -57,6 +56,25 @@ router.put('/:workoutId', async (req,res)=>{
         )
         updatedWorkout._doc.user = req.user
         res.status(200).json(updatedWorkout)
+
+    }catch(err){
+        console.log(err)
+        res.status(500).json(err)
+
+    }
+})
+
+// <><><> Delete <><><>
+router.delete('/:workoutId', async (req,res)=>{
+    try{
+        const workout = await Workout.findById(req.params.workoutId)
+
+        if(!workout.user.equals(req.user._id)){
+            return res.status(403).send("User Not Authorized")
+        }
+
+        const removedWorkout = await Workout.findByIdAndDelete(req.params.workoutId)
+        res.status(200).json(removedWorkout)
 
     }catch(err){
         console.log(err)
