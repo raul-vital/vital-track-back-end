@@ -83,5 +83,22 @@ router.delete('/:workoutId', async (req,res)=>{
     }
 })
 
+router.post('/:workoutId/progress', async (req,res)=>{
+    try{
+        req.body.user = req.user._id
+        const workout = await Workout.findById(req.params.workoutId)
+        workout.progress.push(req.body)
+        await workout.save()
+      
+        const entryProgress = workout.progress[workout.progress.length - 1]
+
+        entryProgress._doc.author = req.user
+        res.status(201).json(entryProgress)
+
+    }catch(err){
+        res.status(500).json(err)
+    }
+})
+
 
 module.exports = router

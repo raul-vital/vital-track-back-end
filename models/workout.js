@@ -5,12 +5,14 @@ const progressSchema = new mongoose.Schema({
        type: mongoose.Schema.Types.ObjectId, ref: 'Workout'
     },
     date: {
-        type: Date,
+        type: String,
     },
     weightsLifted: {
         type: Number,
     },
-    notes: String,
+    notes: {
+       type: String,
+    },
 })
 
 
