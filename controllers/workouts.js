@@ -23,7 +23,7 @@ router.post('/', async(req,res)=>{
 // <><><> Index <><><>
 router.get('/', async (req, res) =>{
     try{
-        const workouts = await Workout.find({}).populate('user').sort({ createdAt: 'desc'})
+        const workouts = await Workout.find({user: req.user._id}).populate('user').sort({ createdAt: 'desc'})
     res.status(200).json(workouts)
     }catch(err){
         res.status(500).json(err)
@@ -33,7 +33,7 @@ router.get('/', async (req, res) =>{
 // <><><> Show <><><>
 router.get('/:workoutId', async (req,res)=>{
     try{
-        const workout = await Workout.findById(req.params.workoutId).populate('user')
+        const workout = await Workout.findById(req.params.workoutId).populate(['user','progress'])
         res.status(200).json(workout)
     }catch(err){
         console.log(err)
