@@ -5,13 +5,13 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 
+const port = process.env.PORT || 3000
+
 const usersRouter = require('./controllers/users')
 const workoutsRouter = require('./controllers/workouts')
 
 
 mongoose.connect(process.env.MONGODB_URI)
-console.log(process.env.MONGODB_URI)
-
 
 mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}`)
@@ -26,6 +26,6 @@ app.use('/workouts', workoutsRouter)
 
 
 
-app.listen(3000,() => {
-    console.log('Listening on server... 3000(lbs) 🏋🏽‍♂️')
+app.listen(port,() => {
+    console.log(`Listening on server... ${port}(lbs) 🏋🏽‍♂️`)
 })
