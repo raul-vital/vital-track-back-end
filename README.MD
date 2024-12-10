@@ -1,4 +1,4 @@
-# Vital Track - A Workout Manager
+# Vital Track - An Exercise Manager
 [Vital Track](https://vitaltrack.netlify.app/) 
 
 ### Front-End 
